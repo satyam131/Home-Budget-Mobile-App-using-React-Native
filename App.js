@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import BudgetEntryListingScreen from './Screens/BudgetEntryListingScreen';
+import BudgetEntryScreen from './Screens/BudgetEntryScreen';
+import { Provider } from 'react-redux';
+import store from './Store/Store';
+import 'react-native-gesture-handler';
+
+
+const Stack = createStackNavigator();
+
+const design = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff', 
+  },
+});
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store} >
+      <View style={design.container}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Budget Entry List">
+           <Stack.Screen name="BudgetEntry" component={BudgetEntryScreen} options={{ title: "BudgetEntry" }} />
+           <Stack.Screen name="BudgetEntryListing" component={BudgetEntryListingScreen} options={{ title: 'Budget Entry Listing'}} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      </View>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
